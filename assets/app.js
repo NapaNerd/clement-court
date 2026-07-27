@@ -18,10 +18,10 @@
   /* ---------------- display metadata ---------------- */
 
   var PHASE_META = {
-    'Phase 1': { num: 1, name: 'Bones first',     tag: 'permits, systems, shell',   color: '#E8917A' },
-    'Phase 2': { num: 2, name: 'The pretty part', tag: 'kitchen, baths, finishes',  color: '#7FA8C9' },
-    'Phase 3': { num: 3, name: 'Fun and outside', tag: 'deck, closets, landscape',  color: '#8FB585' },
-    'Unassigned': { num: 4, name: 'Not slotted yet', tag: 'needs a phase in the sheet', color: '#9C8A82' }
+    'Phase 1': { num: 1, name: 'Phase 1', tag: 'permits, systems, shell',  color: '#E8917A' },
+    'Phase 2': { num: 2, name: 'Phase 2', tag: 'kitchen, baths, finishes', color: '#7FA8C9' },
+    'Phase 3': { num: 3, name: 'Phase 3', tag: 'deck, closets, landscape', color: '#8FB585' },
+    'Unassigned': { num: 4, name: 'Unassigned', tag: 'needs a phase in the sheet', color: '#9C8A82' }
   };
   var PHASE_ORDER = ['Phase 1', 'Phase 2', 'Phase 3', 'Unassigned'];
 
