@@ -100,6 +100,17 @@ window.CC_CONFIG = {
 
 Commit and push. Done.
 
+Two gotchas when changing this file later:
+
+- Keep the comment block intact. `config.js` is loaded as a plain script, so a
+  syntax error here means `window.CC_CONFIG` never gets defined and the page
+  reports "not connected" even though the endpoint is fine. `node --check
+  assets/config.js` catches it in a second.
+- Bump the `?v=` on the `config.js` tag in `index.html`. GitHub Pages serves
+  assets with `max-age=600`, so browsers can otherwise sit on the old endpoint
+  for ten minutes. (To check immediately without waiting on a cache, open the
+  site in a private/incognito window.)
+
 ### 6. Turn on GitHub Pages
 
 Repo **Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)`**.

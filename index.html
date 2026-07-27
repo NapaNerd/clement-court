@@ -167,7 +167,10 @@
   </footer>
 </main>
 
-<script src="assets/config.js"></script>
-<script src="assets/app.js"></script>
+<!-- The ?v= is a cache buster. GitHub Pages serves assets with max-age=600, so
+     without it a browser can sit on a stale config for ten minutes after the
+     endpoint changes. Bump the number whenever config.js changes. -->
+<script src="assets/config.js?v=2"></script>
+<script src="assets/app.js?v=2"></script>
 </body>
 </html>
