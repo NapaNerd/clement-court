@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFF6EE">
+<title>46 Clement Court · Renovation Budget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- Passcode gate -->
+<div id="gate" class="gate" hidden>
+  <form class="gate-card" id="gate-form" autocomplete="off">
+    <span class="pill"><span class="dot"></span>Napa, California</span>
+    <h1 class="gate-title">46 Clement Court</h1>
+    <p class="gate-sub">Our renovation money map. Pop in the passcode to see the numbers.</p>
+    <input class="gate-input" id="gate-input" type="password" inputmode="text"
+           placeholder="Passcode" aria-label="Passcode" autocomplete="current-password" required>
+    <button class="gate-btn" id="gate-btn" type="submit">Show me the money</button>
+    <p class="gate-err" id="gate-err" role="alert" hidden></p>
+  </form>
+</div>
+
+<!-- Loading skeleton -->
+<div id="loading" class="wrap loading" hidden>
+  <div class="skel-head">
+    <div class="skel skel-pill"></div>
+    <div class="skel skel-h1"></div>
+    <div class="skel skel-sub"></div>
+  </div>
+  <div class="skel skel-hero"></div>
+  <div class="skel-grid">
+    <div class="skel skel-card"></div><div class="skel skel-card"></div><div class="skel skel-card"></div>
+  </div>
+  <p class="loading-note">Fetching the latest numbers from the spreadsheet…</p>
+</div>
+
+<!-- Hard error (no cached numbers to fall back on) -->
+<div id="fatal" class="wrap fatal" hidden>
+  <div class="fatal-card">
+    <span class="fatal-emoji" aria-hidden="true">🧰</span>
+    <h1 class="fatal-title">Couldn't reach the spreadsheet</h1>
+    <p class="fatal-body" id="fatal-body">We can't load the numbers right now, and there's no saved copy on this device yet.</p>
+    <div class="fatal-actions">
+      <button class="gate-btn" id="fatal-retry" type="button">Try again</button>
+      <button class="link-btn" id="fatal-forget" type="button">Enter a different passcode</button>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<main id="app" class="wrap" hidden>
+
+  <!-- Stale / offline banner -->
+  <div class="banner" id="banner" role="status" hidden>
+    <span class="banner-dot" aria-hidden="true"></span>
+    <span id="banner-text"></span>
+    <button class="banner-btn" id="banner-retry" type="button">Try again</button>
+  </div>
+
+  <header class="head">
+    <span class="pill"><span class="dot"></span>Napa, California</span>
+    <h1 class="h1">46 Clement Court</h1>
+    <p class="sub">Our renovation money map · every number a friendly placeholder until real bids land</p>
+    <div class="stamp">
+      <span id="stamp-text">—</span>
+      <button class="stamp-btn" id="stamp-refresh" type="button" title="Check the spreadsheet for new numbers">Refresh</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Budget summary">
+    <div class="hero-left">
+      <div class="eyebrow">The big number</div>
+      <div class="big" id="total">—</div>
+      <div class="hero-line" id="hero-line">—</div>
+      <div class="chips">
+        <span class="chip chip-green" id="chip-sqft">—</span>
+        <span class="chip chip-blue" id="chip-spaces">—</span>
+      </div>
+      <div class="cushion">
+        <label class="cushion-label" for="cushion">Cushion <b id="cushion-val">10%</b></label>
+        <input id="cushion" class="cushion-range" type="range" min="0" max="25" step="1" value="10"
+               aria-label="Cushion percentage">
+        <button class="cushion-reset" id="cushion-reset" type="button" hidden>reset to sheet</button>
+      </div>
+    </div>
+    <div class="tracker">
+      <div class="tracker-row">
+        <span class="tracker-label">Spent so far</span>
+        <span class="tracker-val" id="spent">—</span>
+      </div>
+      <div class="bar bar-16"><div class="bar-fill bar-terra" id="spent-bar" style="width:0%"></div></div>
+      <div class="tracker-row">
+        <span class="tracker-label muted">Still to go</span>
+        <span class="tracker-val sm muted" id="remaining">—</span>
+      </div>
+      <div class="tracker-note" id="tracker-note" hidden></div>
+    </div>
+  </section>
+
+  <!-- Phases -->
+  <div class="sec-head">
+    <h2 class="h2">Phases</h2>
+    <span class="rule"></span>
+    <span class="hint">one chunk at a time</span>
+  </div>
+  <p class="sec-sub">These cover the big scope jobs only — the repeating room-by-room stuff sits in its own box at the end.</p>
+  <section class="grid grid-phase" id="phases" aria-label="Phases"></section>
+
+  <!-- Rooms -->
+  <div class="sec-head">
+    <h2 class="h2">Room by room</h2>
+    <span class="rule"></span>
+    <span class="hint">tap a box to peek inside</span>
+  </div>
+  <p class="sec-sub">Sorted biggest to smallest, so you always know where the money is going.</p>
+  <section class="grid grid-room" id="rooms" aria-label="Rooms"></section>
+
+  <!-- Repeating extras -->
+  <section class="extras" aria-label="Repeating extras">
+    <div class="extras-left">
+      <span class="eyebrow green">The repeating extras</span>
+      <span class="extras-total" id="extras-total">—</span>
+      <span class="extras-desc">Priced once, counted per room — paint, flooring, baseboard, doors, lights, shades, knobs.</span>
+    </div>
+    <div class="extras-tiles" id="extras-tiles"></div>
+  </section>
+
+  <!-- Categories -->
+  <div class="sec-head">
+    <h2 class="h2">What kind of work</h2>
+    <span class="rule"></span>
+    <button class="hint hint-btn" id="cat-toggle" type="button" aria-expanded="true" aria-controls="cat-card">hide</button>
+  </div>
+  <section class="cat-card" id="cat-card" aria-label="Categories"></section>
+
+  <!-- Priorities -->
+  <div class="sec-head">
+    <h2 class="h2">Must do vs nice to have</h2>
+    <span class="rule"></span>
+  </div>
+  <section class="grid grid-prio" id="priorities" aria-label="Priorities"></section>
+
+  <!-- Data warnings -->
+  <section class="warn" id="warn" hidden>
+    <span class="warn-title">Worth a look in the spreadsheet</span>
+    <ul class="warn-list" id="warn-list"></ul>
+  </section>
+
+  <!-- Footnote -->
+  <section class="foot">
+    <span class="foot-title">A few things to remember</span>
+    <span class="foot-body" id="foot-body">—</span>
+  </section>
+
+  <footer class="signoff">
+    <button class="link-btn" id="sign-out" type="button">Forget passcode on this device</button>
+  </footer>
+</main>
+
+<script src="assets/config.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Never commit real budget numbers to this public repo.
+data.json
+*.xlsx
+*.csv
+snapshot*.json
+.DS_Store
+node_modules/
